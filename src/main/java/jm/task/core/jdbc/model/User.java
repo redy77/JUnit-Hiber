@@ -69,11 +69,11 @@ public class User {
         return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(lastName, user.lastName) && Objects.equals(age, user.age);
     }
 
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, name, lastName, age);
-//    }
-//
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, lastName, age);
+    }
+
     @Override
     public String toString() {
         return "User{" +
