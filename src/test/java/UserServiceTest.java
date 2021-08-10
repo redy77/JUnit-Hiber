@@ -46,11 +46,14 @@ public class UserServiceTest {
             if (!testName.equals(user.getName())
                     || !testLastName.equals(user.getLastName())
                     || testAge != user.getAge()
+
             ) {
+
                 Assert.fail("User был некорректно добавлен в базу данных");
             }
 
         } catch (Exception e) {
+
             Assert.fail("Во время тестирования сохранения пользователя произошло исключение\n" + e);
         }
     }
