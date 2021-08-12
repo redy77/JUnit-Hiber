@@ -20,7 +20,7 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction tr = session.beginTransaction();
             session.createSQLQuery("CREATE TABLE IF NOT EXISTS newuser(id int NOT NULL AUTO_INCREMENT, name varchar (40), lastName varchar(40), age int (255), PRIMARY KEY (id))")
                     .executeUpdate();
-            tr.commit();;
+            tr.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
