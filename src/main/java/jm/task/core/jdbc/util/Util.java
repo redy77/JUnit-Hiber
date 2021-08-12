@@ -31,9 +31,9 @@ public class Util {
     }
 
     private static SessionFactory sessionFactory;
-    public  Session connect() {
+    public  SessionFactory connect() {
         Session session = null;
-        if (session == null) {
+        if (sessionFactory == null) {
             try {
                 Properties prop = new Properties();
                 prop.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/taskjdbc");
@@ -41,11 +41,10 @@ public class Util {
                 prop.setProperty("hibernate.connection.username", "root");
                 prop.setProperty("hibernate.connection.password", "root-123");
                 sessionFactory = new Configuration().addProperties(prop).addPackage("jm.task.core.jdbc").addAnnotatedClass(User.class).buildSessionFactory();
-                session = sessionFactory.openSession();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return session;
+        return sessionFactory;
     }
 }

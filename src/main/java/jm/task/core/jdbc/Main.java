@@ -22,11 +22,11 @@ public class Main {
 
 
         userService.createUsersTable();
-        userService.saveUser("Алексей", "Петров", (byte) 23);
-        userService.saveUser("Петр", "Алексеев", (byte) 32);
-        userService.saveUser("Лешка", "Петрович", (byte) 43);
+        userService.saveUser("Алексей", "Петров", (byte) 2);
+        userService.saveUser("Петр", "Алексеев", (byte) 3);
+        userService.saveUser("Лешка", "Петрович", (byte) 4);
         userService.removeUserById(1);
-        userService.saveUser("Петька", "Алексеевич",(byte) 13);
+        userService.saveUser("Петька", "Алексеевич",(byte) 1);
         System.out.println(userService.getAllUsers());
         userService.cleanUsersTable();
         userService.dropUsersTable();
