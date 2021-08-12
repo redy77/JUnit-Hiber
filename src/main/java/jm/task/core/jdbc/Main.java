@@ -22,7 +22,7 @@ public class Main {
 
 
         userService.createUsersTable();
-        userService.saveUser("Алексей", "Петров", (byte) 2);
+        userService.saveUser("Алексей", "Петров", (byte) 26);
         userService.saveUser("Петр", "Алексеев", (byte) 3);
         userService.saveUser("Лешка", "Петрович", (byte) 4);
         userService.removeUserById(1);
