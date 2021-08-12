@@ -20,8 +20,7 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction tr = session.beginTransaction();
             session.createSQLQuery("CREATE TABLE IF NOT EXISTS newuser(id int NOT NULL AUTO_INCREMENT, name varchar (40), lastName varchar(40), age varchar(255), PRIMARY KEY (id))")
                     .executeUpdate();
-            tr.commit();
-            session.close();
+            tr.commit();;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,7 +32,6 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction tr = session.beginTransaction();
             session.createSQLQuery("DROP TABLE IF EXISTS newuser").executeUpdate();
             tr.commit();
-            session.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,7 +47,6 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
-            session.close();
             System.out.printf("User с именем – %s добавлен в базу данных\n", name);
         } catch (Exception e) {
             System.out.printf("Не удалось добавить в базу User с именем – %s\n", name);
@@ -62,7 +59,6 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction transaction = session.beginTransaction();
             session.createQuery("delete from User where id =" + id).executeUpdate();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,7 +71,6 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction transaction = session.beginTransaction();
             user = session.createQuery("from User").list();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -88,7 +83,6 @@ public class UserDaoHibernateImpl implements UserDao {
             Transaction transaction = session.beginTransaction();
             session.createQuery("delete from User").executeUpdate();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
