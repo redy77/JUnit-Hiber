@@ -17,7 +17,6 @@ public class Util {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root-123";
     private static Connection connection;
-//    private static SessionFactory sessionFactory;
 
     public static Connection getConnection() {
         if (connection == null) {
