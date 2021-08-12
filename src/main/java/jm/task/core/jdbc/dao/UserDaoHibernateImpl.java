@@ -2,15 +2,18 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
-import jm.task.core.jdbc.util.UtilHibernate;
 import org.hibernate.Session;
 import org.hibernate.SharedSessionContract;
 import org.hibernate.Transaction;
+import org.hibernate.sql.ordering.antlr.Factory;
+
+import javax.management.Query;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-UtilHibernate utilHibernate = new UtilHibernate();
+ Util util = new Util();
 
     public UserDaoHibernateImpl() {
     }
@@ -18,7 +21,7 @@ UtilHibernate utilHibernate = new UtilHibernate();
     @Override
     public void createUsersTable() {
         try {
-            Session session = utilHibernate.connect();
+            Session session = util.connect();
             Transaction tr = session.beginTransaction();
             session.createSQLQuery("CREATE TABLE IF NOT EXISTS newuser(id int NOT NULL AUTO_INCREMENT, name varchar (40), lastName varchar(40), age varchar(255), PRIMARY KEY (id))")
                     .executeUpdate();
@@ -32,7 +35,7 @@ UtilHibernate utilHibernate = new UtilHibernate();
     @Override
     public void dropUsersTable() {
         try {
-            Session session = utilHibernate.connect();
+            Session session = util.connect();
             Transaction tr = session.beginTransaction();
             session.createSQLQuery("DROP TABLE IF EXISTS newuser").executeUpdate();
             tr.commit();
@@ -45,17 +48,15 @@ UtilHibernate utilHibernate = new UtilHibernate();
     @Override
     public void saveUser(String name, String lastName, byte age) {
         try {
-            Session session = utilHibernate.connect();
+            Session session = util.connect();
             User user = new User();
             user.setAge(age);
             user.setLastName(lastName);
             user.setName(name);
-            System.out.println(session);
             Transaction transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
             session.close();
-            System.out.println(session);
             System.out.printf("User с именем – %s добавлен в базу данных\n", name);
         } catch (Exception e) {
             System.out.printf("Не удалось добавить в базу User с именем – %s\n", name);
@@ -65,12 +66,11 @@ UtilHibernate utilHibernate = new UtilHibernate();
     @Override
     public void removeUserById(long id) {
         try {
-            Session session = utilHibernate.connect();
+            Session session = util.connect();
             Transaction transaction = session.beginTransaction();
             session.createQuery("delete from User where id =" + id).executeUpdate();
             transaction.commit();
             session.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,9 +80,9 @@ UtilHibernate utilHibernate = new UtilHibernate();
     public List<User> getAllUsers() {
         List<User> user = new ArrayList<>();
         try {
-            Session session = utilHibernate.connect();
+            Session session = util.connect();
             Transaction transaction = session.beginTransaction();
-            user = session.createQuery("SELECT a FROM User a", User.class).getResultList();
+            user = session.createQuery("from User").list();
             transaction.commit();
             session.close();
         } catch (Exception e) {
@@ -94,7 +94,7 @@ UtilHibernate utilHibernate = new UtilHibernate();
     @Override
     public void cleanUsersTable() {
         try {
-            Session session = utilHibernate.connect();
+            Session session = util.connect();
             Transaction transaction = session.beginTransaction();
             session.createQuery("delete from User").executeUpdate();
             transaction.commit();
