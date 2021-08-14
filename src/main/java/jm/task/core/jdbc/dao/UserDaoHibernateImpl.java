@@ -40,14 +40,14 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void saveUser(String name, String lastName, byte age) {
         try (Session session = sessionFactory.openSession()){
-            User user = new User();
-            user.setAge(age);
-            user.setLastName(lastName);
-            user.setName(name);
+            User user = new User(name, lastName, age);
+//            user.setAge(age);
+//            user.setLastName(lastName);
+//            user.setName(name);
             Transaction transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
-            System.out.printf("User с именем – %s добавлен в базу данных\n", name);
+            System.out.printf("User с именем – %s добавлен в базу данных\n", lastName);
         } catch (Exception e) {
             System.out.printf("Не удалось добавить в базу User с именем – %s\n", name);
         }
@@ -65,8 +65,8 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        List<User> user = new ArrayList<>();
+    public List getAllUsers() {
+        List user = new ArrayList<>();
         try (Session session = sessionFactory.openSession()){
             Transaction transaction = session.beginTransaction();
             user = session.createQuery("from User").list();
